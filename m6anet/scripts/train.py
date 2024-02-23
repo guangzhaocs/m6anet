@@ -34,6 +34,9 @@ def argparser():
     parser.add_argument("--seed",
                         help='random seed for training.',
                         default=25, type=int)
+    parser.add_argument("--pretrained_model",
+                        help='fine tuning on pre-trained model.',
+                        default='', type=str)
     parser.add_argument("--epochs",
                         help='number of training epochs',
                         default=50, type=int)
@@ -63,6 +66,7 @@ def main(args):
     lr = args.lr
     save_per_epoch = args.save_per_epoch
     save_dir = args.save_dir
+    pretrained_model = args.pretrained_model
     weight_decay = args.weight_decay
     n_iterations = args.num_iterations
 
@@ -78,6 +82,7 @@ def main(args):
     train_info["model_config"] = model_config
     train_info["train_config"] = train_config
     train_info["train_config"]["learning_rate"] = lr
+    train_info["train_config"]["pretrained_model"] = pretrained_model
     train_info["train_config"]["epochs"] = n_epoch
     train_info["train_config"]["save_per_epoch"] = save_per_epoch
     train_info["train_config"]["weight_decay"] = weight_decay
