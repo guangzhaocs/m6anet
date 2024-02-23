@@ -6,7 +6,10 @@ import toml
 from argparse import ArgumentParser
 from argparse import ArgumentDefaultsHelpFormatter
 from ..utils.builder import build_dataloader, build_loss_function
-from..utils.constants import DEFAULT_MODEL_CONFIG
+from ..utils.constants import DEFAULT_MODEL_CONFIG,\
+    DEFAULT_MIN_READS, DEFAULT_READ_THRESHOLD,\
+    DEFAULT_NORM_PATH, PRETRAINED_CONFIGS,\
+    DEFAULT_PRETRAINED_MODEL, DEFAULT_PRETRAINED_MODELS
 from ..utils.training_utils import train, validate
 from ..model.model import MILModel
 
