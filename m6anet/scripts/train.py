@@ -97,6 +97,17 @@ def main(args):
         toml.dump(train_info, f)
 
     model = MILModel(model_config).to(device)
+    # ---------- add -----------------------
+    if args.pretrained_model == '':
+        warnings.warn("--pretrained_model is None, train the model de novo.")
+    else:
+        if args.pretrained_model not in DEFAULT_PRETRAINED_MODELS:
+            raise ValueError("Invalid pretrained model {}, must be one of {}".format(args.pretrained_model, DEFAULT_PRETRAINED_MODELS))
+
+        model_state_dict = PRETRAINED_CONFIGS[args.pretrained_model][0]
+        model.load_state_dict(torch.load(model_state_dict, map_location=torch.device(args.device)))
+    # ---------- add end -----------------------
+    
     train_dl, val_dl, test_dl = build_dataloader(train_config, args.n_processes)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=lr,
