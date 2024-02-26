@@ -107,7 +107,7 @@ def main(args):
             warnings.warn("--pretrained_model is in DEFAULT_PRETRAINED_MODELS.")
         else:
             model.load_state_dict(torch.load(args.pretrained_model, map_location=torch.device(args.device)))
-             warnings.warn("--pretrained_model is specified, overwriting default model weights.")
+            warnings.warn("--pretrained_model is specified, overwriting default model weights.")
     # ---------- add end -----------------------
     
     train_dl, val_dl, test_dl = build_dataloader(train_config, args.n_processes)
