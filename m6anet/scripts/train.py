@@ -101,11 +101,13 @@ def main(args):
     if args.pretrained_model == '':
         warnings.warn("--pretrained_model is None, train the model de novo.")
     else:
-        if args.pretrained_model not in DEFAULT_PRETRAINED_MODELS:
-            raise ValueError("Invalid pretrained model {}, must be one of {}".format(args.pretrained_model, DEFAULT_PRETRAINED_MODELS))
-
-        model_state_dict = PRETRAINED_CONFIGS[args.pretrained_model][0]
-        model.load_state_dict(torch.load(model_state_dict, map_location=torch.device(args.device)))
+        if args.pretrained_model in DEFAULT_PRETRAINED_MODELS:
+            model_state_dict = PRETRAINED_CONFIGS[args.pretrained_model][0]
+            model.load_state_dict(torch.load(model_state_dict, map_location=torch.device(args.device)))
+            warnings.warn("--pretrained_model is in DEFAULT_PRETRAINED_MODELS.")
+        else:
+            model.load_state_dict(torch.load(args.pretrained_model, map_location=torch.device(args.device)))
+             warnings.warn("--pretrained_model is specified, overwriting default model weights.")
     # ---------- add end -----------------------
     
     train_dl, val_dl, test_dl = build_dataloader(train_config, args.n_processes)
